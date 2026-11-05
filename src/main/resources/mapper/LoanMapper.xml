@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.secure.assign.mapper.LoanMapper">
+
+    <select id="findByCustomer" resultType="edu.secure.assign.domain.Loan">
+        SELECT loan_id, customer_id, balance, status
+          FROM loan
+         WHERE customer_id = #{customerId}
+    </select>
+
+    <select id="findSorted" resultType="edu.secure.assign.domain.Loan">
+        SELECT loan_id, customer_id, balance, status
+          FROM loan
+         WHERE customer_id = #{customerId}
+         ORDER BY ${sortBy}
+    </select>
+
+    <select id="findById" resultType="edu.secure.assign.domain.Loan">
+        SELECT loan_id, customer_id, balance, status
+          FROM loan
+         WHERE loan_id = #{loanId}
+         AND customer_id=#{customerId}
+    </select>
+
+    <select id="selectBalance" resultType="java.lang.Long">
+        SELECT balance FROM loan WHERE loan_id = #{loanId} AND customer_id = #{customerId}
+    </select>
+
+    <update id="updateBalance">
+        UPDATE loan SET balance = #{balance} WHERE loan_id = #{loanId}    AND customer_id = #{customerId}
+    </update>
+</mapper>

@@ -44,15 +44,9 @@ public class LoanService {
             throw new IllegalArgumentException("잘못된 대출 ID 또는 상환 금액입니다.");
         }
 
-        Long balance = loanMapper.selectBalance(loanId,customerId);
+        int result = loanMapper.repay(loanId, customerId, amount);
 
-        if (balance == null || balance < amount) {
-            return false;
-        }
-
-        loanMapper.updateBalance(loanId,customerId, balance - amount);
-
-        return true;
+        return result == 1;
     }
 
     /** 월 이자 = 원금 × 연이율 ÷ 12 (원 단위 반올림) */

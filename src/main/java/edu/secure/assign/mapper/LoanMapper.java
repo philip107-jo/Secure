@@ -15,14 +15,9 @@ public interface LoanMapper {
     	    @Param("customerId") String customerId
     	);
 
-    	Long selectBalance(
-    	    @Param("loanId") long loanId,
-    	    @Param("customerId") String customerId
-    	);
-
-    	int updateBalance(
+    int repay(
     	    @Param("loanId") long loanId,
     	    @Param("customerId") String customerId,
-    	    @Param("balance") long balance
+    	    @Param("amount") long amount
     	);
 }

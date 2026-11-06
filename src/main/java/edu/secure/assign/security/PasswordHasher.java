@@ -1,26 +1,20 @@
 package edu.secure.assign.security;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.HexFormat;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /** 비밀번호 저장/검증 */
 public final class PasswordHasher {
 
-    private PasswordHasher() {
-    }
+    private static final BCryptPasswordEncoder ENCODER =
+            new BCryptPasswordEncoder();
+
+    private PasswordHasher() {}
 
     public static String hash(String password) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            return HexFormat.of().formatHex(md.digest(password.getBytes(StandardCharsets.UTF_8)));
-        } catch (NoSuchAlgorithmException e) {
-            throw new IllegalStateException(e);
-        }
+        return ENCODER.encode(password);
     }
 
     public static boolean verify(String password, String stored) {
-        return hash(password).equals(stored);
+        return ENCODER.matches(password, stored);
     }
 }

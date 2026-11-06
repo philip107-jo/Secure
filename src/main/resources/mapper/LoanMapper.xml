@@ -22,11 +22,11 @@
          AND customer_id=#{customerId}
     </select>
 
-    <select id="selectBalance" resultType="java.lang.Long">
-        SELECT balance FROM loan WHERE loan_id = #{loanId} AND customer_id = #{customerId}
-    </select>
-
-    <update id="updateBalance">
-        UPDATE loan SET balance = #{balance} WHERE loan_id = #{loanId}    AND customer_id = #{customerId}
-    </update>
+<update id="repay">
+    UPDATE loan
+       SET balance = balance - #{amount}
+     WHERE loan_id = #{loanId}
+       AND customer_id = #{customerId}
+       AND balance >= #{amount}
+</update>
 </mapper>
